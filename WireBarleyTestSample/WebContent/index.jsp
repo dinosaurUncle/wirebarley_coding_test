@@ -15,9 +15,40 @@ let receiptNationValue = "";
 let transferNationValue = "";
 let exchangeObj = null;
 $( document ).ready(function() {
+	exchageTypeSelectboxSetting();
 	getExchangeList();
 	exchangeValueDisplay();
 });
+
+function exchageTypeSelectboxSetting(){
+	let nationList = null;
+	$.ajax({      
+        type:"get",  
+        url:"/nations", 
+        async: false,        
+        success:function(response){                   	
+        	nationList = response.nationList;
+        	console.log(nationList.length);     
+        },   
+        error:function(e){  
+            alert(e.responseText);
+            exchangeValue = 1193.93;  
+        }  
+    });
+   	for (let nation in nationList) {
+   	   	let option = null;
+   	 	option = $("<option value='" + nationList[nation].exchangeValue+"'>" 
+				+ nationList[nation].name+"("+nationList[nation].exchangeValue+")</option>");
+		if (nationList[nation].exchangeType == "trans"){
+			$("#transferNation").append(option);		
+		} else if (nationList[nation].exchangeType == "receip"){
+			$("#receiptNation").append(option);
+		} else {
+
+		}
+    }  
+	
+}
 
 function getExchangeList(){
 	let prefixExchangeType = $("#transferNation").val();
@@ -25,7 +56,7 @@ function getExchangeList(){
 	let combineExchangeType = prefixExchangeType.concat(suffixExchangeType);	
 	$.ajax({      
         type:"get",  
-        url:"/WireBarleyTestSample/exchange/"+prefixExchangeType+"/"+suffixExchangeType, 
+        url:"/exchange/"+prefixExchangeType+"/"+suffixExchangeType, 
         async: false,        
         success:function(response){                   	
         	exchangeValue = response.exchangeObj.exchangeValue;     
@@ -93,18 +124,13 @@ function receiptNationSummit(){
 				<tbody>
 					<tr>
 						<td>송금국가: </td>
-						<td><select id="transferNation" onchange="transferNationChange()">
-								<option value="USD">미국(USD)</option>
-								<option value="AUD">호주(AUD)</option>
+						<td><select id="transferNation" onchange="transferNationChange()">								
 							</select> 
 						</td>
 					</tr>
 					<tr>
 						<td>수취국가: </td>
-						<td><select id="receiptNation" onchange="receiptNationChange()">
-								<option value="KRW">한국(KRW)</option>
-								<option value="JPY">일본(JPY)</option>
-								<option value="PHP">필리핀(PHP)</option>
+						<td><select id="receiptNation" onchange="receiptNationChange()">							
 							</select> 
 						</td>
 					</tr>
