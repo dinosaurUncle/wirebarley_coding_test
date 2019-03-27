@@ -5,9 +5,15 @@
 <html>
 <head>
 <title>사용자 관리</title>
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="<c:url value="/resources/import/style/bootstrap.min.css" />" >
+<link rel="stylesheet" href="<c:url value="/resources/import/style/bootstrap-reboot.min.css" />" >
+<link rel="stylesheet" href="<c:url value="/resources/import/style/bootstrap-grid.min.css" />" >
 <!-- Optional theme -->
 <script src="<c:url value="/resources/import/lib/jquery-3.3.1.min.js" />"></script>
+<script src="<c:url value="/resources/import/lib/bootstrap/bootstrap.min.js" />"></script>
+<script src="<c:url value="/resources/import/lib/bootstrap/bootstrap.bundle.min.js" />"></script>
 <script>
 let exchangeValue = 0;
 let remittance = 0;
@@ -116,41 +122,49 @@ function receiptNationSummit(){
 </script>
 </head>
 <body>
-	<div id="app">
-		<h1>환율계산</h1>
-		
-		<div>
-			<table>
-				<tbody>
-					<tr>
-						<td>송금국가: </td>
-						<td><select id="transferNation" onchange="transferNationChange()">								
-							</select> 
-						</td>
-					</tr>
-					<tr>
-						<td>수취국가: </td>
-						<td><select id="receiptNation" onchange="receiptNationChange()">							
-							</select> 
-						</td>
-					</tr>
-					<tr>
-						<td>환율: </td>
-						<td><p id="exchangeValue"></p></td>
-					</tr>
-					<tr>
-						<td>송금액: </td>
-						<td><input type="text" id="remittance" value="100"><span id="receiptMark">USD</span></td>
-					</tr>
-					<tr>
-						<td colspan="2"><button onclick="receiptNationSummit()">Submit</button></td>
-					</tr>
-				</tbody>
-			</table>
+<div class="container" style="margin-top: 20px;">
+  <div class="row">
+    <div class="col-sm"></div>
+    <div class="col-sm">
+		<div class="card" style="width: 22rem;">
+		  <div class="card-body">
+			<div>
+				<h1>환율계산</h1>
+				<br>
+				<div>
+					<form>					  
+					  <div class="form-group">
+					    <label for="exampleFormControlSelect1">송금국가</label>
+					    <select class="form-control" id="transferNation" onchange="transferNationChange()"></select>
+					  </div>
+					  <div class="form-group">
+					    <label for="exampleFormControlSelect2">수취국가</label>
+					    <select class="form-control" id="receiptNation" onchange="receiptNationChange()"></select>
+					  </div>
+					  <div class="form-group">
+					    <label for="exampleFormControlTextarea1">환율</label>
+					    <p class="form-control" id="exchangeValue" style="margin-bottom: 0px;"></p>
+					  </div>
+					  <div class="form-group">
+					    <label for="exampleFormControlTextarea1">송금액 (<span id="receiptMark">USD</span>)</label>
+					    <input class="form-control" type="text" id="remittance" value="100">
+					  </div>
+					  <div class="form-group">
+					    <button class="btn btn-success" type="button" onclick="receiptNationSummit()">Submit</button>
+					  </div>
+					  <div class="form-group">
+					    <span id="resultMessage"></span>
+					  </div>
+					</form>
+				</div>
+				<br>
+				<div><span id="resultMessage"></span></div>
+			</div>    
+		  </div>
 		</div>
-		<br>
-		
-		<div><span id="resultMessage"></span></div>
 	</div>
+	<div class="col-sm"></div>
+</div>
+</div>	
 </body>
 </html>

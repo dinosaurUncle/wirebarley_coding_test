@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.ParseException;
@@ -15,6 +16,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,6 +27,7 @@ import wirebarley.exchange.vo.ExchangeVO;
 
 @Service("exchangeService")
 public class ExchangeServiceImpl implements ExchangeService {
+	protected static Logger logger = Logger.getLogger(ExchangeServiceImpl.class.getName());
 	public static final String BASE_URL = "http://apilayer.net/api/";
     public static final String ENDPOINT = "live";
     
@@ -50,8 +53,7 @@ public class ExchangeServiceImpl implements ExchangeService {
             Date timeStampDate = new Date((long)(exchangeRates.getLong("timestamp")*1000)); 
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss a");
             String formattedDate = dateFormat.format(timeStampDate);
-            System.out.println("Date: " + formattedDate);               
-            System.out.println("\n");
+            logger.info("Date: " + formattedDate);           
             exchangeObj =  new ExchangeVO(combinText, exchangeRates.getJSONObject("quotes").getDouble(combinText)); 
             response.close();
         } catch (ClientProtocolException e) {

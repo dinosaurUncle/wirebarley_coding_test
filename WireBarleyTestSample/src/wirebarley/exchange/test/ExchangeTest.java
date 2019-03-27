@@ -1,7 +1,6 @@
 package wirebarley.exchange.test;
 
-import java.util.Iterator;
-import java.util.List;
+import java.util.logging.Logger;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,6 +16,7 @@ import wirebarley.exchange.vo.ExchangeVO;
 @ContextConfiguration(locations="classpath:config/beans.xml")
 public class ExchangeTest {
 	
+	protected static Logger logger = Logger.getLogger(ExchangeTest.class.getName());
 	@Autowired
 	ApplicationContext context;
 	
@@ -25,6 +25,6 @@ public class ExchangeTest {
 		ExchangeService exchangeService 
 		= (ExchangeService) context.getBean("exchangeService");		
 		ExchangeVO exchangeObj = exchangeService.getExchangeObj("USD", "KRW");
-		System.out.println(exchangeObj);				
+		logger.info(exchangeObj.toString());						
 	}
 }
